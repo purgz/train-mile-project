@@ -26,4 +26,11 @@ public class TrainController {
 
         return searchTrainService.findTrainJourney(originCRS,destinationCRS);
     }
+
+    @GetMapping("/id/date/{originCRS}/{destinationCRS}")
+    public String[] getIdAndDate(@PathVariable String originCRS,
+                                 @PathVariable String destinationCRS){
+        
+        return searchTrainService.getIdAndDate(originCRS, destinationCRS);
+   }
 }
