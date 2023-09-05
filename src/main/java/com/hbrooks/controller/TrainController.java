@@ -30,7 +30,7 @@ public class TrainController {
     @GetMapping("/id/date/{originCRS}/{destinationCRS}")
     public String[] getIdAndDate(@PathVariable String originCRS,
                                  @PathVariable String destinationCRS){
-        
+
         return searchTrainService.getIdAndDate(originCRS, destinationCRS);
    }
 }

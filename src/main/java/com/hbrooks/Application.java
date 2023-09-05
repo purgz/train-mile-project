@@ -1,5 +1,8 @@
 package com.hbrooks;
 
+import com.hbrooks.entity.TrainStationLocation;
+import com.hbrooks.service.TrainStationLocationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -8,6 +11,9 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Application {
+
+	@Autowired
+	private TrainStationLocationService trainStationLocationService;
 
 	public static void main(String[] args) {
 
@@ -19,8 +25,9 @@ public class Application {
 	CommandLineRunner runner(){
 		return args -> {
 
-			//System.out.println(name);
-			//System.out.println(password);
+			TrainStationLocation trainStationLocation = trainStationLocationService.findByCrs("BCS");
+
+			System.out.println(trainStationLocation);
 		};
 	}
 
