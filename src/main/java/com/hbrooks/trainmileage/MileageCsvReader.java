@@ -1,11 +1,8 @@
-package com.hbrooks.service.trainmileage;
+package com.hbrooks.trainmileage;
 
-import com.hbrooks.dao.TrainStationLocationRepository;
-import com.hbrooks.entity.TrainStationLocation;
-import com.hbrooks.service.TrainStationLocationService;
-import com.hbrooks.service.realtimetrainapi.SearchTrainService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.hbrooks.trainmileage.mileagedatamodel.MileageRow;
+import com.hbrooks.trainmileage.mileagedatamodel.MileageTable;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,20 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class MileageService {
-
-    private TrainStationLocationService trainStationLocationService;
-
-    //need to inject the station repo to convert CRS code to station name
-    @Autowired
-    public MileageService(TrainStationLocationService trainStationLocationService){
-        this.trainStationLocationService = trainStationLocationService;
-    }
-
+@Component
+public class MileageCsvReader {
 
     //finds table with mileage data for given tableId - tableId can be extracted from StationIndex.csv
-    private MileageTable findMileageTable(int tableId){
+    public MileageTable findMileageTable(int tableId){
 
         String line;
         MileageTable table = new MileageTable();
@@ -58,7 +46,6 @@ public class MileageService {
 
                             rows.add(row);
                         }
-
                         line = br.readLine();
                     }
                     table.setRows(rows);
@@ -69,12 +56,11 @@ public class MileageService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return table;
     }
 
     //now works - improved efficiency by adding breaks to stop searching once station is found
-    private List<Integer> getStationsTables(String crsCode){
+    public List<Integer> getStationsTables(String crsCode){
 
         List<Integer> result = new ArrayList<>();
         String line;
@@ -162,51 +148,4 @@ public class MileageService {
 
         return result;
     }
-
-
-    public float getDistanceBetweenTwoStations(String originCrs, String destinationCrs){
-
-        List<Integer> originTableIdList = getStationsTables(originCrs);
-        List<Integer> destinationTableIdList = getStationsTables(destinationCrs);
-
-        //retain all means first list only contains values which are also present in second list
-        List<Integer> commonTables = new ArrayList<>(originTableIdList);
-        commonTables.retainAll(destinationTableIdList);
-
-        //no direct route between stations
-        if (commonTables.isEmpty()) return -1;
-
-        //get location object
-        TrainStationLocation originStation = trainStationLocationService.findByCrs(originCrs);
-        TrainStationLocation destinationStation = trainStationLocationService.findByCrs(destinationCrs);
-
-        //extract station name and format - remove trailing white space
-        String originFullName = originStation.getStationName().replace("Rail Station", "").trim();
-        String destinationFullName = destinationStation.getStationName().replace("Rail Station", "").trim();
-
-        //find the common mileage table
-        MileageTable mileageTable = findMileageTable(commonTables.get(0));
-
-        //get each row
-        MileageRow originRow = mileageTable.getRowByStationName(originFullName);
-        MileageRow destinationRow = mileageTable.getRowByStationName(destinationFullName);
-
-        //check if origin and destination have a matching column value in distance array
-        for (int i = 0; i < originRow.getDistances().length; i++){
-
-            if (!originRow.getDistances()[i].equals("") && !destinationRow.getDistances()[i].equals("")){
-
-                //System.out.println("MATCH FOUND INDEX : " + i);
-                float result = Float.parseFloat(originRow.getDistances()[i]) - Float.parseFloat(destinationRow.getDistances()[i]);
-
-                return Math.abs(result);
-
-            }
-        }
-
-        System.out.println("No route from " + originFullName + " to " + destinationFullName + " found");
-        //not found
-        return -1;
-    }
-
 }

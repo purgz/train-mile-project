@@ -1,7 +1,7 @@
-package com.hbrooks.controller;
+package com.hbrooks.searchtrainapi;
 
-import com.hbrooks.model.TrainSearchResponse;
-import com.hbrooks.service.realtimetrainapi.SearchTrainService;
+import com.hbrooks.searchtrainapi.apiresponsemodel.TrainSearchResponse;
+import com.hbrooks.searchtrainapi.SearchTrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

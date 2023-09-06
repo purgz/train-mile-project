@@ -1,11 +1,8 @@
 package com.hbrooks;
 
-import com.hbrooks.entity.TrainStationLocation;
-import com.hbrooks.service.TrainStationLocationService;
-import com.hbrooks.service.trainmileage.MileageService;
-import com.hbrooks.service.trainmileage.MileageTable;
+import com.hbrooks.trainstation.TrainStationService;
+import com.hbrooks.trainmileage.MileageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,9 +10,6 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Application {
-
-	@Autowired
-	private TrainStationLocationService trainStationLocationService;
 
 	@Autowired
 	private MileageService mileageService;
@@ -30,19 +24,7 @@ public class Application {
 	CommandLineRunner runner(){
 		return args -> {
 
-			//TrainStationLocation trainStationLocation = trainStationLocationService.findByCrs("BCS");
-
-			//System.out.println(trainStationLocation);
-
-			//MileageTable table = mileageService.mileageTable(113);
-
-			//System.out.println(table);
-
-
-			//System.out.println(mileageService.getStationsTables("BCS"));
-
-			System.out.println(mileageService.getDistanceBetweenTwoStations("BIT","WCX") + " miles");
-
+			//System.out.println(mileageService.getDistanceBetweenTwoStations("BIT","WCX") + " miles");
 
 		};
 	}

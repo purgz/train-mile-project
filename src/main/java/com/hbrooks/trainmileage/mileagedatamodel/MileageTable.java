@@ -1,4 +1,6 @@
-package com.hbrooks.service.trainmileage;
+package com.hbrooks.trainmileage.mileagedatamodel;
+
+import com.hbrooks.trainmileage.mileagedatamodel.MileageRow;
 
 import java.util.ArrayList;
 import java.util.List;

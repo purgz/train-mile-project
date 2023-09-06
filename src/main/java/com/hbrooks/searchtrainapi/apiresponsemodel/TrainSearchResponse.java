@@ -1,5 +1,5 @@
 
-package com.hbrooks.model;
+package com.hbrooks.searchtrainapi.apiresponsemodel;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "services"
 })
 
+//generated POJO for the api response from realtimetrains
 public class TrainSearchResponse {
 
     @JsonProperty("location")

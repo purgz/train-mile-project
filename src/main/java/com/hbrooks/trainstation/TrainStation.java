@@ -1,4 +1,4 @@
-package com.hbrooks.entity;
+package com.hbrooks.trainstation;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "train_station_locations")
-public class TrainStationLocation {
+public class TrainStation {
 
     //maybe used at some point to plot stations on map and draw lines between
 
@@ -24,14 +24,14 @@ public class TrainStationLocation {
     @Column(name = "longitude")
     private String longitude;
 
-    public TrainStationLocation(String crsCode, String stationName, String latitude, String longitude) {
+    public TrainStation(String crsCode, String stationName, String latitude, String longitude) {
         this.crsCode = crsCode;
         this.stationName = stationName;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public TrainStationLocation() {
+    public TrainStation() {
     }
 
     public String getCrsCode() {
@@ -40,7 +40,7 @@ public class TrainStationLocation {
 
     @Override
     public String toString() {
-        return "TrainStationLocation{" +
+        return "TrainStation{" +
                 "crsCode='" + crsCode + '\'' +
                 ", stationName='" + stationName + '\'' +
                 ", latitude='" + latitude + '\'' +
