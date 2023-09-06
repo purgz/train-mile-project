@@ -7,22 +7,21 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class MileageService {
 
 
-    private String mileageFilePath = "src/main/resources/static/NRT May 2023 Mileages.csv";
-
-    
     //finds table with mileage data for given tableId - tableId can be extracted from StationIndex.csv
     public MileageTable mileageTable(int tableId){
 
-        String line = "";
+        String line;
         MileageTable table = new MileageTable();
 
         try {
+            String mileageFilePath = "src/main/resources/static/NRT May 2023 Mileages.csv";
             BufferedReader br = new BufferedReader(new FileReader(mileageFilePath));
 
             while((line = br.readLine()) != null){
@@ -44,7 +43,7 @@ public class MileageService {
                                     values[4],
                                     values[5],
                                     values[6]);
-                            //System.out.println(Arrays.toString(values));
+
                             rows.add(row);
                         }
 
@@ -60,5 +59,95 @@ public class MileageService {
         }
 
         return table;
+    }
+
+    //now works - improved efficiency by adding breaks to stop searching once station is found
+    public List<Integer> getStationsTables(String crsCode){
+
+        List<Integer> result = new ArrayList<>();
+        String line;
+
+        try {
+            String stationIndexFilePath = "src/main/resources/static/NRT May 2023 Station Index.csv";
+            BufferedReader br = new BufferedReader(new FileReader(stationIndexFilePath));
+
+
+            /*
+             ** two options
+             *  -code - station - table1,...
+             *      for this option can just read all the table columns at the right
+             *
+             *  -code -station - blank
+             *      -routes - table name
+             *      -routes - table name...
+             *       ..
+             *          .
+             *      for this option need to read all the following rows until a new code is found - at each row with no code
+             *      add to the results for the code.
+             */
+            while ((line = br.readLine()) != null){
+
+                String[] values = line.split(",", -1);
+                if (values[0].equals(crsCode)){
+
+                    //check if following column is empty
+                    if (values[2].equals("")){
+                        //need to read rows until next station code found and add the tables
+
+                        line = br.readLine();
+                        String[] newValues = line.split(",");
+
+                        //keep reading next line as long as code is empty
+                        while(newValues[0].equals("")){
+
+
+
+                            //if the last value in the row is a number add it to the results
+                            if (newValues[newValues.length - 1].matches("\\d+")){
+                                result.add(Integer.parseInt(newValues[newValues.length-1]));
+                            }
+
+                            //next line
+                            line = br.readLine();
+                            newValues = line.split(",");
+
+                            //if a new page is found then skip over the titles
+                            if (line.equals("STATION INDEX,,,,,")){
+                                line = br.readLine();
+                                line = br.readLine();
+                                newValues = line.split(",");
+                            }
+
+                            //if new page and on a 'continued' section then skip one line and continue from there
+                            if (newValues[0].equals(crsCode)){
+                                line = br.readLine();
+                                newValues = line.split(",");
+                            }
+                        }
+                        break;
+
+                    } else {
+
+                        //add the 4 table ids into result if not null
+                        for (int i = 2; i < values.length; i++){
+                            if (!values[i].equals("")){
+                                result.add(Integer.parseInt(values[i]));
+                            }
+                        }
+                        break;
+                    }
+
+                }
+            }
+
+            //if nothing found just returns empty list
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

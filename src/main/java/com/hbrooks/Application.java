@@ -34,10 +34,12 @@ public class Application {
 
 			//System.out.println(trainStationLocation);
 
-			MileageTable table = mileageService.mileageTable(113);
+			//MileageTable table = mileageService.mileageTable(113);
 
-			System.out.println(table);
+			//System.out.println(table);
 
+
+			System.out.println(mileageService.getStationsTables("sdfdsf"));
 		};
 	}
 
