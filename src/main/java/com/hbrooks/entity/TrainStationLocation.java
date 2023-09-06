@@ -9,6 +9,8 @@ import jakarta.persistence.Table;
 @Table(name = "train_station_locations")
 public class TrainStationLocation {
 
+    //maybe used at some point to plot stations on map and draw lines between
+
     @Id
     @Column(name = "crs_code")
     private String crsCode;

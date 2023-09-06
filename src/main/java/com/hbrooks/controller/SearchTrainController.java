@@ -1,7 +1,7 @@
 package com.hbrooks.controller;
 
 import com.hbrooks.model.TrainSearchResponse;
-import com.hbrooks.service.SearchTrainService;
+import com.hbrooks.service.realtimetrainapi.SearchTrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/search")
-public class TrainController {
+public class SearchTrainController {
 
     private SearchTrainService searchTrainService;
 
     @Autowired
-    public TrainController(SearchTrainService searchTrainService) {
+    public SearchTrainController(SearchTrainService searchTrainService) {
         this.searchTrainService = searchTrainService;
     }
 

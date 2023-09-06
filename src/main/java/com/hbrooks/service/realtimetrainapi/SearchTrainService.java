@@ -1,4 +1,4 @@
-package com.hbrooks.service;
+package com.hbrooks.service.realtimetrainapi;
 
 import com.hbrooks.model.TrainSearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;

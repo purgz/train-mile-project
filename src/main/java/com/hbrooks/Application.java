@@ -2,6 +2,8 @@ package com.hbrooks;
 
 import com.hbrooks.entity.TrainStationLocation;
 import com.hbrooks.service.TrainStationLocationService;
+import com.hbrooks.service.trainmileage.MileageService;
+import com.hbrooks.service.trainmileage.MileageTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +17,9 @@ public class Application {
 	@Autowired
 	private TrainStationLocationService trainStationLocationService;
 
+	@Autowired
+	private MileageService mileageService;
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(Application.class, args);
@@ -25,9 +30,14 @@ public class Application {
 	CommandLineRunner runner(){
 		return args -> {
 
-			TrainStationLocation trainStationLocation = trainStationLocationService.findByCrs("BCS");
+			//TrainStationLocation trainStationLocation = trainStationLocationService.findByCrs("BCS");
 
-			System.out.println(trainStationLocation);
+			//System.out.println(trainStationLocation);
+
+			MileageTable table = mileageService.mileageTable(113);
+
+			System.out.println(table);
+
 		};
 	}
 

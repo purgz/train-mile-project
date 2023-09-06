@@ -17,6 +17,7 @@ public class TrainStationLocationServiceImpl implements TrainStationLocationServ
         this.trainStationLocationRepository = trainStationLocationRepository;
     }
 
+    //finds the location info for a train station based on the CRS code - unique 3 letter identifier
     @Override
     public TrainStationLocation findByCrs(String crs) {
 

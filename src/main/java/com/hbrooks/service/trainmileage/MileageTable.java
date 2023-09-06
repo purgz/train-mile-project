@@ -1,13 +1,15 @@
+package com.hbrooks.service.trainmileage;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MileAgeTable {
+public class MileageTable {
 
     private List<MileageRow> rows = new ArrayList<>();
 
-    public MileAgeTable(){};
+    public MileageTable(){};
 
-    public MileAgeTable(List<MileageRow> rows) {
+    public MileageTable(List<MileageRow> rows) {
         this.rows = rows;
     }
 

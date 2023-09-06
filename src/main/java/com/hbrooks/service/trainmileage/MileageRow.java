@@ -1,3 +1,5 @@
+package com.hbrooks.service.trainmileage;
+
 public class MileageRow {
 
     private String stationName;
