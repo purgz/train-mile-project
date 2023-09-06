@@ -39,7 +39,11 @@ public class Application {
 			//System.out.println(table);
 
 
-			System.out.println(mileageService.getStationsTables("sdfdsf"));
+			//System.out.println(mileageService.getStationsTables("BCS"));
+
+			System.out.println(mileageService.getDistanceBetweenTwoStations("BIT","WCX") + " miles");
+
+
 		};
 	}
 

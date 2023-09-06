@@ -28,7 +28,7 @@ public class TrainStationLocationServiceImpl implements TrainStationLocationServ
         if (result.isPresent()){
             trainStationLocation = result.get();
         } else {
-            throw new RuntimeException("Did not find station with crs: " + crs);
+            System.out.println("Couldn't find station " + crs);
         }
 
         return trainStationLocation;
