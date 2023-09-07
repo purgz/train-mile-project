@@ -40,6 +40,7 @@ public class SearchTrainController {
 
         String[] idAndDate = searchTrainService.getIdAndDate(originCRS, destinationCRS);
 
+       //add custom exception
         if (idAndDate == null){
             return null;
         }

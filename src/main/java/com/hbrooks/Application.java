@@ -1,7 +1,6 @@
 package com.hbrooks;
 
-import com.hbrooks.trainstation.TrainStationService;
-import com.hbrooks.trainmileage.MileageService;
+import com.hbrooks.trainmileage.MileageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 public class Application {
 
 	@Autowired
-	private MileageService mileageService;
+	private MileageServiceImpl mileageService;
 
 	public static void main(String[] args) {
 

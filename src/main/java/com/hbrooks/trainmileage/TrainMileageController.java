@@ -24,4 +24,6 @@ public class TrainMileageController {
 
         return "distance is " + mileageService.getDistanceBetweenTwoStations(origin, destination);
     }
+
+    //add support for list of stations
 }
