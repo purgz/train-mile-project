@@ -65,7 +65,7 @@ public class MileageServiceImpl implements MileageService{
 
             }
         }
-
+        System.out.println(commonTables.get(1));
         System.out.println("No route from " + originFullName + " to " + destinationFullName + " found");
         //not found
         return -1;

@@ -4,7 +4,10 @@ import com.hbrooks.searchtrainapi.searchresponsemodel.TrainSearchResponse;
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.reactive.function.client.WebClient;
 
 //wrapper for the realtraintime api
@@ -66,8 +69,7 @@ public class SearchTrainServiceImpl implements SearchTrainService{
         TrainSearchResponse trainSearchResponse = findTrainJourney(originCRS,destinationCRS);
 
         if (trainSearchResponse.getServices() == null){
-            System.out.println("No direct service");
-            return null;
+            throw new ServiceNotFoundException("No direct train service found " + originCRS + " to " + destinationCRS);
         }
 
         result[0] = trainSearchResponse.getServices().get(0).getServiceUid();
@@ -79,4 +81,5 @@ public class SearchTrainServiceImpl implements SearchTrainService{
 
         return result;
     }
+
 }

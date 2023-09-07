@@ -3,10 +3,9 @@ package com.hbrooks.searchtrainapi;
 import com.hbrooks.searchtrainapi.searchresponsemodel.TrainSearchResponse;
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/search")
@@ -40,11 +39,30 @@ public class SearchTrainController {
 
         String[] idAndDate = searchTrainService.getIdAndDate(originCRS, destinationCRS);
 
-       //add custom exception
-        if (idAndDate == null){
-            return null;
-        }
-
-       return searchTrainService.findServiceDetails(idAndDate[0],idAndDate[1]);
+        return searchTrainService.findServiceDetails(idAndDate[0],idAndDate[1]);
    }
+
+    @ExceptionHandler
+    public ResponseEntity<ServiceDetailsErrorResponse> handleException(ServiceNotFoundException exc){
+
+        ServiceDetailsErrorResponse error = new ServiceDetailsErrorResponse();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ServiceDetailsErrorResponse> handleException(Exception exc){
+
+        ServiceDetailsErrorResponse error = new ServiceDetailsErrorResponse();
+
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }
