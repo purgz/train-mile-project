@@ -1,5 +1,5 @@
 
-package com.hbrooks.searchtrainapi.apiresponsemodel;
+package com.hbrooks.searchtrainapi.searchresponsemodel;
 
 import java.util.LinkedHashMap;
 import java.util.List;

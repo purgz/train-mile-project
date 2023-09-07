@@ -1,5 +1,5 @@
 
-package com.hbrooks.searchtrainapi.apiresponsemodel;
+package com.hbrooks.searchtrainapi.servicedetailsresponsemodel;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "workingTime",
     "publicTime"
 })
-public class Origin {
+
+public class Origin__1 {
 
     @JsonProperty("tiploc")
     private String tiploc;

@@ -1,5 +1,5 @@
 
-package com.hbrooks.searchtrainapi.apiresponsemodel;
+package com.hbrooks.searchtrainapi.servicedetailsresponsemodel;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,47 +12,24 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "name",
-    "crs",
     "tiploc",
-    "country",
-    "system"
+    "description",
+    "workingTime",
+    "publicTime"
 })
 
 public class Destination {
 
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("crs")
-    private String crs;
     @JsonProperty("tiploc")
     private String tiploc;
-    @JsonProperty("country")
-    private String country;
-    @JsonProperty("system")
-    private String system;
+    @JsonProperty("description")
+    private String description;
+    @JsonProperty("workingTime")
+    private String workingTime;
+    @JsonProperty("publicTime")
+    private String publicTime;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
-
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
-
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @JsonProperty("crs")
-    public String getCrs() {
-        return crs;
-    }
-
-    @JsonProperty("crs")
-    public void setCrs(String crs) {
-        this.crs = crs;
-    }
 
     @JsonProperty("tiploc")
     public String getTiploc() {
@@ -64,24 +41,34 @@ public class Destination {
         this.tiploc = tiploc;
     }
 
-    @JsonProperty("country")
-    public String getCountry() {
-        return country;
+    @JsonProperty("description")
+    public String getDescription() {
+        return description;
     }
 
-    @JsonProperty("country")
-    public void setCountry(String country) {
-        this.country = country;
+    @JsonProperty("description")
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    @JsonProperty("system")
-    public String getSystem() {
-        return system;
+    @JsonProperty("workingTime")
+    public String getWorkingTime() {
+        return workingTime;
     }
 
-    @JsonProperty("system")
-    public void setSystem(String system) {
-        this.system = system;
+    @JsonProperty("workingTime")
+    public void setWorkingTime(String workingTime) {
+        this.workingTime = workingTime;
+    }
+
+    @JsonProperty("publicTime")
+    public String getPublicTime() {
+        return publicTime;
+    }
+
+    @JsonProperty("publicTime")
+    public void setPublicTime(String publicTime) {
+        this.publicTime = publicTime;
     }
 
     @JsonAnyGetter
