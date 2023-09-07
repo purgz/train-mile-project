@@ -46,25 +46,30 @@ public class MileageServiceImpl implements MileageService{
         String originFullName = originStation.getStationName().replace("Rail Station", "").trim();
         String destinationFullName = destinationStation.getStationName().replace("Rail Station", "").trim();
 
-        //find the common mileage table
-        MileageTable mileageTable = mileageCsvReader.findMileageTable(commonTables.get(0));
 
-        //get each row
-        MileageRow originRow = mileageTable.getRowByStationName(originFullName);
-        MileageRow destinationRow = mileageTable.getRowByStationName(destinationFullName);
 
-        //check if origin and destination have a matching column value in distance array
-        for (int i = 0; i < originRow.getDistances().length; i++){
+        for (int tableId : commonTables){
+            //go through each common table
+            //find the common mileage table
+            MileageTable mileageTable = mileageCsvReader.findMileageTable(tableId);
 
-            if (!originRow.getDistances()[i].equals("") && !destinationRow.getDistances()[i].equals("")){
+            //get each row
+            MileageRow originRow = mileageTable.getRowByStationName(originFullName);
+            MileageRow destinationRow = mileageTable.getRowByStationName(destinationFullName);
 
-                //System.out.println("MATCH FOUND INDEX : " + i);
-                float result = Float.parseFloat(originRow.getDistances()[i]) - Float.parseFloat(destinationRow.getDistances()[i]);
+            //check if origin and destination have a matching column value in distance array
+            for (int i = 0; i < originRow.getDistances().length; i++){
 
-                return Math.abs(result);
+                if (!originRow.getDistances()[i].equals("") && !destinationRow.getDistances()[i].equals("")){
 
+                    //System.out.println("MATCH FOUND INDEX : " + i);
+                    float result = Float.parseFloat(originRow.getDistances()[i]) - Float.parseFloat(destinationRow.getDistances()[i]);
+
+                    return Math.abs(result);
+                }
             }
         }
+
         System.out.println(commonTables.get(1));
         System.out.println("No route from " + originFullName + " to " + destinationFullName + " found");
         //not found
