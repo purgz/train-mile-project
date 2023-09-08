@@ -1,6 +1,7 @@
 package com.hbrooks.trainjourney;
 
 import com.hbrooks.searchtrainapi.SearchTrainService;
+import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.Location;
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import com.hbrooks.trainmileage.MileageRequest;
 import com.hbrooks.trainmileage.MileageService;
@@ -28,7 +29,96 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
     @Override
     public TrainJourney createJourney(TrainJourneyRequest trainJourneyRequest) {
 
-        //want to extract only the locations in the service which the journey will go through 
+        //want to extract only the locations in the service which the journey will go through
+        List<ServiceDetails> serviceDetailsList = findServicesForJourney(trainJourneyRequest);
+        List<String> allStops = new ArrayList<>();
+
+        //case where there is no via stops
+
+
+        if (trainJourneyRequest.getViaStations().size() == 0){
+
+            List<Location> locations = serviceDetailsList.get(0).getLocations();
+
+            for (Location location : locations){
+                if (location.getCrs().equals(trainJourneyRequest.getStartStation())){
+                    while(!location.getCrs().equals(trainJourneyRequest.getEndStation())){
+                        allStops.add(location.getCrs());
+
+                        int index = locations.indexOf(location);
+                        location = locations.get(index + 1);
+                    }
+                    allStops.add(trainJourneyRequest.getEndStation());
+                }
+            }
+        } else {
+
+
+            //finds all the stops for each part of the journey and adds to all stops list
+            List<Location> firstLegLocations = serviceDetailsList.get(0).getLocations();
+            List<Location> lastLegLocations = serviceDetailsList.get(serviceDetailsList.size() - 1).getLocations();
+
+            //find the list of stations for the first leg
+            for (Location location : firstLegLocations){
+                if (location.getCrs().equals(trainJourneyRequest.getStartStation())){
+                    while(!location.getCrs().equals(trainJourneyRequest.getViaStations().get(0))){
+                        allStops.add(location.getCrs());
+
+                        int index = firstLegLocations.indexOf(location);
+                        location = firstLegLocations.get(index + 1);
+                    }
+                }
+            }
+            allStops.add(trainJourneyRequest.getViaStations().get(0));
+            //allStops.add("****");
+
+            //find list of stations for all via stations.
+            for (int i = 1; i < serviceDetailsList.size() - 1; i++){
+
+                List<Location> locationList = serviceDetailsList.get(i).getLocations();
+
+                //get the current pair of locations
+                String firstViaStation = trainJourneyRequest.getViaStations().get(i - 1);
+                String nextViaStation = trainJourneyRequest.getViaStations().get(i);
+                System.out.println("STATIONS " + firstViaStation + " " + nextViaStation);
+
+                for (Location location : locationList){
+                    if (location.getCrs().equals(firstViaStation)){
+                        int index = locationList.indexOf(location);
+                        location = locationList.get(index + 1);
+                        while(!location.getCrs().equals(nextViaStation)){
+                            allStops.add(location.getCrs());
+
+                            index = locationList.indexOf(location);
+                            location = locationList.get(index + 1);
+                        }
+                        allStops.add(nextViaStation);
+                    }
+                }
+
+                //allStops.add("****");
+            }
+
+            //find the list of stations for the last leg
+            for (Location location : lastLegLocations){
+                if (location.getCrs().equals(trainJourneyRequest.getViaStations().get(
+                        trainJourneyRequest.getViaStations().size() - 1))){
+
+                    int index = lastLegLocations.indexOf(location);
+                    location = lastLegLocations.get(index + 1);
+                    while(!location.getCrs().equals(trainJourneyRequest.getEndStation())){
+                        allStops.add(location.getCrs());
+
+                        index = lastLegLocations.indexOf(location);
+                        location = lastLegLocations.get(index + 1);
+                    }
+                    allStops.add(trainJourneyRequest.getEndStation());
+                }
+            }
+
+        }
+
+        System.out.println(allStops);
 
         //calculate mileage
         MileageRequest mileageRequest = new MileageRequest(
@@ -41,7 +131,7 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
         TrainJourney newJourney = new TrainJourney(
                 trainJourneyRequest.getStartStation(),
                 trainJourneyRequest.getViaStations(),
-                null,
+                allStops,
                 trainJourneyRequest.getEndStation(),
                 mileage);
 

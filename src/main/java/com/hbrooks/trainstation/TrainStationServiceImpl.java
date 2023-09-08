@@ -43,16 +43,8 @@ public class TrainStationServiceImpl implements TrainStationService {
 
         TrainStation trainStation = null;
 
-        Optional<TrainStation> startStation = trainStationLocationRepository.findById(trainJourney.getStartStation());
 
-        if (startStation.isPresent()){
-            stationList.add(startStation.get());
-        } else {
-            System.out.println("didnt find");
-            //throw station not found exception
-        }
-
-        for (String crs : trainJourney.getViaStations()){
+        for (String crs : trainJourney.getAllStops()){
             Optional<TrainStation> station = trainStationLocationRepository.findById(crs);
 
             if (station.isPresent()){
@@ -62,16 +54,7 @@ public class TrainStationServiceImpl implements TrainStationService {
                 //throw station not found exception
             }
         }
-
-        Optional<TrainStation> endStation = trainStationLocationRepository.findById(trainJourney.getEndStation());
-
-        if (endStation.isPresent()){
-            stationList.add(endStation.get());
-        } else {
-            System.out.println("didnt find");
-            //throw station not found exception
-        }
-
+        
         return stationList;
     }
 
