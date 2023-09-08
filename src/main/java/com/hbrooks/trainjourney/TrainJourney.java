@@ -17,6 +17,8 @@ public class TrainJourney {
 
     private List<String> viaStations;
 
+    private List<String> allStops;
+
     private String endStation;
 
     private float mileage;
@@ -24,11 +26,20 @@ public class TrainJourney {
     public TrainJourney() {
     }
 
-    public TrainJourney(String startStation, List<String> viaStations, String endStation, float mileage) {
+    public List<String> getAllStops() {
+        return allStops;
+    }
+
+    public void setAllStops(List<String> allStops) {
+        this.allStops = allStops;
+    }
+
+    public TrainJourney(String startStation, List<String> viaStations, List<String> allStops, String endStation, float mileage) {
         this.startStation = startStation;
         this.viaStations = viaStations;
         this.endStation = endStation;
         this.mileage = mileage;
+        this.allStops = allStops;
     }
 
     public float getMileage() {

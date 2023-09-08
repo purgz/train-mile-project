@@ -10,4 +10,6 @@ public interface SearchTrainService {
     ServiceDetails findServiceDetails(String serviceId, String date);
 
     String[] getIdAndDate(String originCRS, String destinationCRS);
+
+    ServiceDetails findServiceDetailsByCRS(String originCRS, String destinationCRS);
 }

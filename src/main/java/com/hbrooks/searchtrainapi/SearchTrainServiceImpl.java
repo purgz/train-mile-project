@@ -82,4 +82,11 @@ public class SearchTrainServiceImpl implements SearchTrainService{
         return result;
     }
 
+    public ServiceDetails findServiceDetailsByCRS(String originCRS, String destinationCRS){
+
+        String[] idAndDate = getIdAndDate(originCRS, destinationCRS);
+
+        return findServiceDetails(idAndDate[0],idAndDate[1]);
+    }
+
 }

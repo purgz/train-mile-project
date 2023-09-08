@@ -1,12 +1,15 @@
 package com.hbrooks.trainjourney;
 
 
+import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import com.hbrooks.trainstation.TrainStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/journey")
@@ -23,5 +26,11 @@ public class TrainJourneyController {
     public TrainJourney addJourney(@RequestBody TrainJourneyRequest trainJourneyRequest){
 
         return trainJourneyService.createJourney(trainJourneyRequest);
+    }
+
+    @GetMapping("/service-details-list")
+    public List<ServiceDetails> serviceDetailsList(@RequestBody TrainJourneyRequest trainJourneyRequest){
+
+        return trainJourneyService.findServicesForJourney(trainJourneyRequest);
     }
 }
