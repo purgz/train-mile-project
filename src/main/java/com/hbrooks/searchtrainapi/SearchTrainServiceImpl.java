@@ -69,7 +69,7 @@ public class SearchTrainServiceImpl implements SearchTrainService{
         TrainSearchResponse trainSearchResponse = findTrainJourney(originCRS,destinationCRS);
 
         if (trainSearchResponse.getServices() == null){
-            throw new ServiceNotFoundException("No direct train service found " + originCRS + " to " + destinationCRS);
+            throw new ServiceNotFoundException("No train service found " + originCRS + " to " + destinationCRS);
         }
 
         result[0] = trainSearchResponse.getServices().get(0).getServiceUid();

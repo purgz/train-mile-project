@@ -1,5 +1,6 @@
 package com.hbrooks.trainmileage;
 
+import com.hbrooks.searchtrainapi.ServiceNotFoundException;
 import com.hbrooks.trainmileage.mileagedatamodel.MileageRow;
 import com.hbrooks.trainmileage.mileagedatamodel.MileageTable;
 import com.hbrooks.trainstation.TrainStation;
@@ -26,6 +27,7 @@ public class MileageServiceImpl implements MileageService{
     }
 
 
+    @Override
     public float getDistanceBetweenTwoStations(String originCrs, String destinationCrs){
 
         List<Integer> originTableIdList = mileageCsvReader.getStationsTables(originCrs);
@@ -35,8 +37,14 @@ public class MileageServiceImpl implements MileageService{
         List<Integer> commonTables = new ArrayList<>(originTableIdList);
         commonTables.retainAll(destinationTableIdList);
 
+        //add custom exception here
         //no direct route between stations
-        if (commonTables.isEmpty()) return -1;
+        if (commonTables.isEmpty()) {
+
+            //failed to calculate distance between stations - check they have direct service
+            //throw exception
+            throw new ServiceNotFoundException("Could not find distance between stations - check you entered valid stations");
+        }
 
         //get location object
         TrainStation originStation = trainStationLocationService.findByCrs(originCrs);
@@ -47,7 +55,7 @@ public class MileageServiceImpl implements MileageService{
         String destinationFullName = destinationStation.getStationName().replace("Rail Station", "").trim();
 
 
-
+        //goes through all tables and all distance values and returns the first match
         for (int tableId : commonTables){
             //go through each common table
             //find the common mileage table
@@ -70,10 +78,32 @@ public class MileageServiceImpl implements MileageService{
             }
         }
 
-        System.out.println(commonTables.get(1));
         System.out.println("No route from " + originFullName + " to " + destinationFullName + " found");
         //not found
-        return -1;
+        throw new ServiceNotFoundException("No direct route from " + originFullName + " to " + destinationFullName + " could be found");
+    }
+
+
+    public float getDistanceWithExtraLocations(MileageRequest mileageRequest) {
+
+        float totalDistance = 0;
+
+        //find distance from start station to mileageRequest.getViaStations().get(0);
+
+        //find distance from mileageRequest.getViaStations().get(0) to mileageRequest.getViaStations().get(1);
+
+        //find distance from last in list to last
+
+        totalDistance += getDistanceBetweenTwoStations(mileageRequest.getStartStation(), mileageRequest.getViaStations().get(0));
+        totalDistance += getDistanceBetweenTwoStations(mileageRequest.getViaStations().get(mileageRequest.getViaStations().size() -1 ), mileageRequest.getEndStation());
+
+
+        for (int i = 0; i < mileageRequest.getViaStations().size() - 1; i++){
+            totalDistance += getDistanceBetweenTwoStations(mileageRequest.getViaStations().get(i),
+                                                        mileageRequest.getViaStations().get(i+1));
+        }
+
+        return totalDistance;
     }
 
 }

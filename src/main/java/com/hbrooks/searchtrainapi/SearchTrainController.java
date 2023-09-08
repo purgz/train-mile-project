@@ -41,28 +41,4 @@ public class SearchTrainController {
 
         return searchTrainService.findServiceDetails(idAndDate[0],idAndDate[1]);
    }
-
-    @ExceptionHandler
-    public ResponseEntity<ServiceDetailsErrorResponse> handleException(ServiceNotFoundException exc){
-
-        ServiceDetailsErrorResponse error = new ServiceDetailsErrorResponse();
-
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setMessage(exc.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ServiceDetailsErrorResponse> handleException(Exception exc){
-
-        ServiceDetailsErrorResponse error = new ServiceDetailsErrorResponse();
-
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setMessage(exc.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
 }
