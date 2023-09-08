@@ -94,9 +94,13 @@ public class MileageServiceImpl implements MileageService{
 
         //find distance from last in list to last
 
+        //if list ist empty return the distance between start and end
+        if (mileageRequest.getViaStations().size() == 0){
+            return getDistanceBetweenTwoStations(mileageRequest.getStartStation(), mileageRequest.getEndStation());
+        }
+
         totalDistance += getDistanceBetweenTwoStations(mileageRequest.getStartStation(), mileageRequest.getViaStations().get(0));
         totalDistance += getDistanceBetweenTwoStations(mileageRequest.getViaStations().get(mileageRequest.getViaStations().size() -1 ), mileageRequest.getEndStation());
-
 
         for (int i = 0; i < mileageRequest.getViaStations().size() - 1; i++){
             totalDistance += getDistanceBetweenTwoStations(mileageRequest.getViaStations().get(i),

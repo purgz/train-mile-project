@@ -35,7 +35,7 @@ public class MileageTable {
         for (MileageRow row : this.rows){
 
             if (row.getStationName().toLowerCase().equals(stationName.toLowerCase())){
-                System.out.println("FOUND station: " + stationName);
+                //System.out.println("FOUND station: " + stationName);
                 return row;
             }
         }
