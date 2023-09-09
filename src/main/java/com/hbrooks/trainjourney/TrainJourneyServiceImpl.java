@@ -141,6 +141,8 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
 
         //will add database support later
 
+        //trainJourneyRepository.save(newJourney);
+
         return newJourney;
     }
 
@@ -178,6 +180,8 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
 
     @Override
     public List<TrainJourney> findAllJourneys() {
+
+        // System.out.println(trainJourneyRepository.findStops());
 
         return trainJourneyRepository.findAll();
     }

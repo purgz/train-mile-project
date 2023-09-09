@@ -3,6 +3,7 @@ package com.hbrooks.trainjourney;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.Where;
 
 import java.util.List;
 
@@ -24,8 +25,17 @@ public class TrainJourney {
     @Column(name = "mileage")
     private float mileage;
 
+    @ElementCollection(targetClass = String.class)
+    @CollectionTable(name = "journey_stops", joinColumns = @JoinColumn(name = "journey_id"))
+    @Column(name = "crs_code")
+    @Where(clause = "via_station = true")
+    @OrderBy("order")
     private List<String> viaStations;
 
+    @ElementCollection(targetClass = String.class)
+    @CollectionTable(name = "journey_stops", joinColumns = @JoinColumn(name = "journey_id"))
+    @Column(name = "crs_code")
+    @OrderBy("order")
     private List<String> allStops;
 
     public TrainJourney() {
