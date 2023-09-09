@@ -132,16 +132,28 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
 
         float mileage = mileageService.getDistanceWithExtraLocations(mileageRequest);
 
-        TrainJourney newJourney = new TrainJourney(
-                trainJourneyRequest.getStartStation(),
-                trainJourneyRequest.getViaStations(),
-                allStops,
-                trainJourneyRequest.getEndStation(),
-                mileage);
+        TrainJourney newJourney = new TrainJourney();
 
-        //will add database support later
+        List<TrainJourneyStop> allStations = new ArrayList<>();
 
-        //trainJourneyRepository.save(newJourney);
+        for (int i = 0; i < allStops.size(); i++){
+
+            boolean isViaStation = trainJourneyRequest.getViaStations().contains(allStops.get(i));
+
+            TrainJourneyStop stop = new TrainJourneyStop(
+                    i + 1,
+                    allStops.get(i),
+                    isViaStation);
+
+            allStations.add(stop);
+        }
+
+        newJourney.setAllStops(allStations);
+        newJourney.setMileage(mileage);
+        newJourney.setStartStation(trainJourneyRequest.getStartStation());
+        newJourney.setEndStation(trainJourneyRequest.getEndStation());
+
+        trainJourneyRepository.save(newJourney);
 
         return newJourney;
     }

@@ -25,33 +25,26 @@ public class TrainJourney {
     @Column(name = "mileage")
     private float mileage;
 
-    @ElementCollection(targetClass = String.class)
-    @CollectionTable(name = "journey_stops", joinColumns = @JoinColumn(name = "journey_id"))
-    @Column(name = "crs_code")
-    @Where(clause = "via_station = true")
-    @OrderBy("order")
-    private List<String> viaStations;
-
-    @ElementCollection(targetClass = String.class)
-    @CollectionTable(name = "journey_stops", joinColumns = @JoinColumn(name = "journey_id"))
-    @Column(name = "crs_code")
-    @OrderBy("order")
-    private List<String> allStops;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "journey_stop_join_table",
+            joinColumns = @JoinColumn(name = "journey_id"),
+            inverseJoinColumns = @JoinColumn(name = "journey_stop_id"))
+    @OrderBy("stop_order")
+    private List<TrainJourneyStop> allStops;
 
     public TrainJourney() {
     }
 
-    public List<String> getAllStops() {
+    public List<TrainJourneyStop> getAllStops() {
         return allStops;
     }
 
-    public void setAllStops(List<String> allStops) {
+    public void setAllStops(List<TrainJourneyStop> allStops) {
         this.allStops = allStops;
     }
 
-    public TrainJourney(String startStation, List<String> viaStations, List<String> allStops, String endStation, float mileage) {
+    public TrainJourney(String startStation, List<TrainJourneyStop> allStops, String endStation, float mileage) {
         this.startStation = startStation;
-        this.viaStations = viaStations;
         this.endStation = endStation;
         this.mileage = mileage;
         this.allStops = allStops;
@@ -70,7 +63,6 @@ public class TrainJourney {
         return "TrainJourney{" +
                 "journeyId=" + journeyId +
                 ", startStation='" + startStation + '\'' +
-                ", viaStations=" + viaStations +
                 ", endStation='" + endStation + '\'' +
                 ", mileage=" + mileage +
                 '}';
@@ -90,14 +82,6 @@ public class TrainJourney {
 
     public void setStartStation(String startStation) {
         this.startStation = startStation;
-    }
-
-    public List<String> getViaStations() {
-        return viaStations;
-    }
-
-    public void setViaStations(List<String> viaStations) {
-        this.viaStations = viaStations;
     }
 
     public String getEndStation() {

@@ -2,6 +2,7 @@ package com.hbrooks.trainstation;
 
 import com.hbrooks.searchtrainapi.SearchTrainService;
 import com.hbrooks.trainjourney.TrainJourney;
+import com.hbrooks.trainjourney.TrainJourneyStop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,10 @@ public class TrainStationServiceImpl implements TrainStationService {
         TrainStation trainStation = null;
 
 
-        for (String crs : trainJourney.getAllStops()){
+        for (TrainJourneyStop stop : trainJourney.getAllStops()){
+
+            String crs = stop.getCrsCode();
+
             Optional<TrainStation> station = trainStationLocationRepository.findById(crs);
 
             if (station.isPresent()){
