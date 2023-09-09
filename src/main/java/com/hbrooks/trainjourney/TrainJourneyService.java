@@ -9,4 +9,6 @@ public interface TrainJourneyService {
     TrainJourney createJourney(TrainJourneyRequest trainJourneyRequest);
 
     List<ServiceDetails> findServicesForJourney(TrainJourneyRequest trainJourneyRequest);
+
+    List<TrainJourney> findAllJourneys();
 }

@@ -1,27 +1,32 @@
 package com.hbrooks.trainjourney;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Formula;
 
 import java.util.List;
 
+@Entity
+@Table(name = "journey")
 public class TrainJourney {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "journey_id")
     private int journeyId;
 
+    @Column(name = "start_station")
     private String startStation;
+
+    @Column(name = "end_station")
+    private String endStation;
+
+    @Column(name = "mileage")
+    private float mileage;
 
     private List<String> viaStations;
 
     private List<String> allStops;
-
-    private String endStation;
-
-    private float mileage;
 
     public TrainJourney() {
     }

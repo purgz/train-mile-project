@@ -19,11 +19,15 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
 
     private SearchTrainService searchTrainService;
 
+    private TrainJourneyRepository trainJourneyRepository;
+
     @Autowired
-    public TrainJourneyServiceImpl(MileageService mileageService, SearchTrainService searchTrainService) {
+    public TrainJourneyServiceImpl(MileageService mileageService, SearchTrainService searchTrainService,
+                                   TrainJourneyRepository trainJourneyRepository) {
 
         this.mileageService = mileageService;
         this.searchTrainService = searchTrainService;
+        this.trainJourneyRepository = trainJourneyRepository;
     }
 
     @Override
@@ -118,7 +122,7 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
 
         }
 
-        System.out.println(allStops);
+        //System.out.println(allStops);
 
         //calculate mileage
         MileageRequest mileageRequest = new MileageRequest(
@@ -171,4 +175,12 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
 
         return serviceDetailsList;
     }
+
+    @Override
+    public List<TrainJourney> findAllJourneys() {
+
+        return trainJourneyRepository.findAll();
+    }
+
+
 }

@@ -25,6 +25,12 @@ public class TrainJourneyController {
     @GetMapping("/add")
     public TrainJourney addJourney(@RequestBody TrainJourneyRequest trainJourneyRequest){
 
+        //creates a new journey with all the stops given and returns journey object
+
+        //journey object not includes all the stops which the train will make along the journey
+
+        //this data can be used to make a more accurate plot of the route the train will take
+
         return trainJourneyService.createJourney(trainJourneyRequest);
     }
 
@@ -32,5 +38,12 @@ public class TrainJourneyController {
     public List<ServiceDetails> serviceDetailsList(@RequestBody TrainJourneyRequest trainJourneyRequest){
 
         return trainJourneyService.findServicesForJourney(trainJourneyRequest);
+    }
+
+    //not finished yet
+    @GetMapping("/journeys")
+    public List<TrainJourney> getAllJourneys(){
+
+        return trainJourneyService.findAllJourneys();
     }
 }
