@@ -4,10 +4,7 @@ package com.hbrooks.trainjourney;
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import com.hbrooks.trainstation.TrainStationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,14 +19,8 @@ public class TrainJourneyController {
         this.trainJourneyService = trainJourneyService;
     }
 
-    @GetMapping("/add")
+    @PostMapping("/journeys")
     public TrainJourney addJourney(@RequestBody TrainJourneyRequest trainJourneyRequest){
-
-        //creates a new journey with all the stops given and returns journey object
-
-        //journey object not includes all the stops which the train will make along the journey
-
-        //this data can be used to make a more accurate plot of the route the train will take
 
         return trainJourneyService.createJourney(trainJourneyRequest);
     }
@@ -45,5 +36,19 @@ public class TrainJourneyController {
     public List<TrainJourney> getAllJourneys(){
 
         return trainJourneyService.findAllJourneys();
+    }
+
+    @DeleteMapping("/journeys/{journeyId}")
+    public String deleteEmployee(@PathVariable int journeyId){
+
+        TrainJourney journey = trainJourneyService.findById(journeyId);
+
+        if (journey == null){
+            throw new RuntimeException("Journey with id " + journeyId + " not found");
+        }
+
+        trainJourneyService.deleteJourneyById(journeyId);
+
+        return "Deleted journey with id " + journeyId;
     }
 }

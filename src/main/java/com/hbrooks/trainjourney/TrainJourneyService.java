@@ -11,4 +11,8 @@ public interface TrainJourneyService {
     List<ServiceDetails> findServicesForJourney(TrainJourneyRequest trainJourneyRequest);
 
     List<TrainJourney> findAllJourneys();
+
+    TrainJourney findById(int id);
+
+    void deleteJourneyById(int id);
 }
