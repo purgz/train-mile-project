@@ -1,10 +1,12 @@
 package com.hbrooks.trainjourney;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Where;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,6 +34,18 @@ public class TrainJourney {
     @OrderBy("stop_order")
     private List<TrainJourneyStop> allStops;
 
+    @Column(name = "date")
+    @JsonFormat
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public TrainJourney() {
     }
 
@@ -43,11 +57,12 @@ public class TrainJourney {
         this.allStops = allStops;
     }
 
-    public TrainJourney(String startStation, List<TrainJourneyStop> allStops, String endStation, float mileage) {
+    public TrainJourney(String startStation, List<TrainJourneyStop> allStops, String endStation, float mileage, Date date) {
         this.startStation = startStation;
         this.endStation = endStation;
         this.mileage = mileage;
         this.allStops = allStops;
+        this.date = date;
     }
 
     public float getMileage() {

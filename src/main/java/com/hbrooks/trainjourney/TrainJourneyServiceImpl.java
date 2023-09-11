@@ -153,6 +153,7 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
         newJourney.setMileage(mileage);
         newJourney.setStartStation(trainJourneyRequest.getStartStation());
         newJourney.setEndStation(trainJourneyRequest.getEndStation());
+        newJourney.setDate(trainJourneyRequest.getDate());
 
         trainJourneyRepository.save(newJourney);
 

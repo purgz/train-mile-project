@@ -2,6 +2,7 @@ package com.hbrooks.trainjourney;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
 import java.util.List;
 
 public class TrainJourneyRequest {
@@ -12,6 +13,16 @@ public class TrainJourneyRequest {
     private List<String> viaStations;
 
     private String endStation;
+
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public String getStartStation() {
         return startStation;
@@ -40,7 +51,8 @@ public class TrainJourneyRequest {
     public TrainJourneyRequest() {
     }
 
-    public TrainJourneyRequest(String startStation, List<String> viaStations, String endStation) {
+    public TrainJourneyRequest(String startStation, List<String> viaStations, String endStation, Date date) {
+        this.date = date;
         this.startStation = startStation;
         this.viaStations = viaStations;
         this.endStation = endStation;
