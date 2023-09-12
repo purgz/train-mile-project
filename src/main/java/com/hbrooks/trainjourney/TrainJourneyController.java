@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/journey")
+@CrossOrigin
 public class TrainJourneyController {
 
     private TrainJourneyService trainJourneyService;
