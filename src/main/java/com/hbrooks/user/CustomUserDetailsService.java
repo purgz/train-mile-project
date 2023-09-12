@@ -30,8 +30,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with email " + username);
         }
 
-        System.out.println("Password " + user.getPassword());
-        System.out.println(user.getRoles());
+        //System.out.println("Password " + user.getPassword());
+        //System.out.println(user.getRoles());
 
         Collection<GrantedAuthority> authorities = new HashSet<>();
 

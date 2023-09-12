@@ -215,6 +215,13 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
         return journey;
     }
 
+    @Override
+    public List<TrainJourney> findJourneysByUserId(int id) {
+
+        //System.out.println(id);
+        return trainJourneyRepository.findByUserId(id);
+    }
+
     public void deleteJourneyById(int id){
 
         trainJourneyRepository.deleteById(id);
