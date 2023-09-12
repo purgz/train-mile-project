@@ -27,6 +27,9 @@ public class TrainJourney {
     @Column(name = "mileage")
     private float mileage;
 
+    @Column(name = "user_id")
+    private int userId;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "journey_stop_join_table",
             joinColumns = @JoinColumn(name = "journey_id"),
@@ -57,12 +60,13 @@ public class TrainJourney {
         this.allStops = allStops;
     }
 
-    public TrainJourney(String startStation, List<TrainJourneyStop> allStops, String endStation, float mileage, Date date) {
+    public TrainJourney(String startStation, List<TrainJourneyStop> allStops, String endStation, float mileage, Date date, int userId) {
         this.startStation = startStation;
         this.endStation = endStation;
         this.mileage = mileage;
         this.allStops = allStops;
         this.date = date;
+        this.userId = userId;
     }
 
     public float getMileage() {
@@ -80,11 +84,22 @@ public class TrainJourney {
                 ", startStation='" + startStation + '\'' +
                 ", endStation='" + endStation + '\'' +
                 ", mileage=" + mileage +
+                ", userId=" + userId +
+                ", allStops=" + allStops +
+                ", date=" + date +
                 '}';
     }
 
     public int getJourneyId() {
         return journeyId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setJourneyId(int journeyId) {

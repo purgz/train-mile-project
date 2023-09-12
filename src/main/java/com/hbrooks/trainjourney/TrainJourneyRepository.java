@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface TrainJourneyRepository extends JpaRepository<TrainJourney, Integer> {
 
-
+    List<TrainJourney> findByUserId(Integer id);
 }

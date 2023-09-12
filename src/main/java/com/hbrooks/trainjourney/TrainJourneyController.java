@@ -4,12 +4,15 @@ package com.hbrooks.trainjourney;
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import com.hbrooks.trainstation.TrainStationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/journey")
+@CrossOrigin
 public class TrainJourneyController {
 
     private TrainJourneyService trainJourneyService;
@@ -36,6 +39,15 @@ public class TrainJourneyController {
     public List<TrainJourney> getAllJourneys(){
 
         return trainJourneyService.findAllJourneys();
+    }
+
+    @GetMapping("/journeys/{id}")
+    @PreAuthorize("authentication.principal.id == #id")
+    public List<TrainJourney> getJourneysByUserId(@PathVariable("id") Integer id, Principal principal){
+
+        System.out.println(principal);
+
+        return trainJourneyService.findJourneysByUserId(id);
     }
 
     @DeleteMapping("/journeys/{journeyId}")
