@@ -36,10 +36,12 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
 
+        //improve this config later to allow adminds to access all and users to only access their journey data
 
         http.authorizeHttpRequests( configurer ->
                 configurer
-                        .requestMatchers(HttpMethod.GET, "/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/journey/journeys/**").hasAnyRole("USER","ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/journey/journeys").hasAnyRole("USER","ADMIN")
         );
 
         http.httpBasic(Customizer.withDefaults());

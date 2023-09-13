@@ -32,7 +32,7 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
     }
 
     @Override
-    public TrainJourney createJourney(TrainJourneyRequest trainJourneyRequest) {
+    public TrainJourney createJourney(TrainJourneyRequest trainJourneyRequest, int userId) {
 
         //want to extract only the locations in the service which the journey will go through
         List<ServiceDetails> serviceDetailsList = findServicesForJourney(trainJourneyRequest);
@@ -154,6 +154,8 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
         newJourney.setStartStation(trainJourneyRequest.getStartStation());
         newJourney.setEndStation(trainJourneyRequest.getEndStation());
         newJourney.setDate(trainJourneyRequest.getDate());
+        newJourney.setUserId(userId);
+        //add in the user id of creator using principal.id
 
         trainJourneyRepository.save(newJourney);
 

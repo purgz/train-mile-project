@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TrainJourneyService {
 
-    TrainJourney createJourney(TrainJourneyRequest trainJourneyRequest);
+    TrainJourney createJourney(TrainJourneyRequest trainJourneyRequest, int userId);
 
     List<ServiceDetails> findServicesForJourney(TrainJourneyRequest trainJourneyRequest);
 
