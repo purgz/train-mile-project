@@ -3,8 +3,11 @@ package com.hbrooks.trainjourney;
 
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import com.hbrooks.trainstation.TrainStationService;
+import com.hbrooks.user.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -23,9 +26,9 @@ public class TrainJourneyController {
     }
 
     @PostMapping("/journeys")
-    public TrainJourney addJourney(@RequestBody TrainJourneyRequest trainJourneyRequest){
+    public TrainJourney addJourney(@RequestBody TrainJourneyRequest trainJourneyRequest, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        return trainJourneyService.createJourney(trainJourneyRequest);
+        return trainJourneyService.createJourney(trainJourneyRequest, userDetails.getId());
     }
 
     @GetMapping("/service-details-list")
@@ -34,7 +37,7 @@ public class TrainJourneyController {
         return trainJourneyService.findServicesForJourney(trainJourneyRequest);
     }
 
-    //not finished yet
+    //should only be for admins
     @GetMapping("/journeys")
     public List<TrainJourney> getAllJourneys(){
 
@@ -43,9 +46,9 @@ public class TrainJourneyController {
 
     @GetMapping("/journeys/{id}")
     @PreAuthorize("authentication.principal.id == #id")
-    public List<TrainJourney> getJourneysByUserId(@PathVariable("id") Integer id, Principal principal){
+    public List<TrainJourney> getJourneysByUserId(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-        System.out.println(principal);
+       // System.out.println(userDetails.getId());
 
         return trainJourneyService.findJourneysByUserId(id);
     }
