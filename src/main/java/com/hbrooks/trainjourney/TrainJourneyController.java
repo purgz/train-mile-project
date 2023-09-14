@@ -44,8 +44,9 @@ public class TrainJourneyController {
         return trainJourneyService.findAllJourneys();
     }
 
+    //make it so admin can also do this
     @GetMapping("/journeys/{id}")
-    @PreAuthorize("authentication.principal.id == #id")
+    @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
     public List<TrainJourney> getJourneysByUserId(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails){
 
        // System.out.println(userDetails.getId());
@@ -54,6 +55,7 @@ public class TrainJourneyController {
     }
 
     @DeleteMapping("/journeys/{journeyId}")
+    @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
     public String deleteEmployee(@PathVariable int journeyId){
 
         TrainJourney journey = trainJourneyService.findById(journeyId);
