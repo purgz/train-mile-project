@@ -2,6 +2,7 @@ package com.hbrooks.trainjourney;
 
 
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
+import com.hbrooks.trainstation.TrainStation;
 import com.hbrooks.trainstation.TrainStationService;
 import com.hbrooks.user.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class TrainJourneyController {
 
     @DeleteMapping("/journeys/{id}/{journeyId}")
     @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
-    public String deleteEmployee(@PathVariable int journeyId){
+    public String deleteEmployee(@PathVariable int journeyId, @PathVariable("id") Integer id){
 
         TrainJourney journey = trainJourneyService.findById(journeyId);
 
@@ -67,5 +68,13 @@ public class TrainJourneyController {
         trainJourneyService.deleteJourneyById(journeyId);
 
         return "Deleted journey with id " + journeyId;
+    }
+
+    @GetMapping("/journeys/stations/{id}/{journeyId}")
+    @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
+    public List<TrainStation> getStationsForJourneyById(@PathVariable("journeyId") Integer journeyId, @PathVariable("id") Integer id){
+
+
+        return trainJourneyService.findStationsForJourneyById(journeyId);
     }
 }

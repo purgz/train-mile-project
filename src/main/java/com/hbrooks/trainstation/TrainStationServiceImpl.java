@@ -2,6 +2,7 @@ package com.hbrooks.trainstation;
 
 import com.hbrooks.searchtrainapi.SearchTrainService;
 import com.hbrooks.trainjourney.TrainJourney;
+import com.hbrooks.trainjourney.TrainJourneyService;
 import com.hbrooks.trainjourney.TrainJourneyStop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class TrainStationServiceImpl implements TrainStationService {
                 stationList.add(station.get());
             } else {
                 System.out.println("didnt find");
-                //throw station not found exception
+                throw new RuntimeException("Did not find station with crs code " + crs);
             }
         }
 

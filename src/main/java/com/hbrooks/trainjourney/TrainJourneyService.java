@@ -1,6 +1,7 @@
 package com.hbrooks.trainjourney;
 
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
+import com.hbrooks.trainstation.TrainStation;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface TrainJourneyService {
     List<TrainJourney> findJourneysByUserId(int id);
 
     void deleteJourneyById(int id);
+
+    List<TrainStation> findStationsForJourneyById(int journeyId);
 }
