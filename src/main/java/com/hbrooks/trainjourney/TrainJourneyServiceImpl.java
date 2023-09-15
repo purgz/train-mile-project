@@ -5,6 +5,7 @@ import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.Location;
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import com.hbrooks.trainmileage.MileageRequest;
 import com.hbrooks.trainmileage.MileageService;
+import com.hbrooks.trainstation.TrainStation;
 import com.hbrooks.trainstation.TrainStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,16 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
 
     private TrainJourneyRepository trainJourneyRepository;
 
+    private TrainStationService trainStationService;
+
     @Autowired
     public TrainJourneyServiceImpl(MileageService mileageService, SearchTrainService searchTrainService,
-                                   TrainJourneyRepository trainJourneyRepository) {
+                                   TrainJourneyRepository trainJourneyRepository, TrainStationService trainStationService) {
 
         this.mileageService = mileageService;
         this.searchTrainService = searchTrainService;
         this.trainJourneyRepository = trainJourneyRepository;
+        this.trainStationService = trainStationService;
     }
 
     @Override
@@ -227,6 +231,16 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
     public void deleteJourneyById(int id){
 
         trainJourneyRepository.deleteById(id);
+    }
+
+    public List<TrainStation> findStationsForJourneyById(int id){
+
+        //get train journey
+        TrainJourney journey = findById(id);
+
+        List<TrainStation> stations = trainStationService.findStationsForJourney(journey);
+
+        return stations;
     }
 
 
