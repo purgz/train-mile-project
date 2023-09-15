@@ -54,7 +54,7 @@ public class TrainJourneyController {
         return trainJourneyService.findJourneysByUserId(id);
     }
 
-    @DeleteMapping("/journeys/{journeyId}")
+    @DeleteMapping("/journeys/{id}/{journeyId}")
     @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
     public String deleteEmployee(@PathVariable int journeyId){
 
