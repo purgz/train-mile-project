@@ -1,4 +1,4 @@
-package com.hbrooks.trainstation;
+package com.hbrooks.trainmileage.trainstation;
 
 import com.hbrooks.trainjourney.TrainJourney;
 import org.springframework.beans.factory.annotation.Autowired;

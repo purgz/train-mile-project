@@ -5,8 +5,8 @@ import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.Location;
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
 import com.hbrooks.trainmileage.MileageRequest;
 import com.hbrooks.trainmileage.MileageService;
-import com.hbrooks.trainstation.TrainStation;
-import com.hbrooks.trainstation.TrainStationService;
+import com.hbrooks.trainmileage.trainstation.TrainStation;
+import com.hbrooks.trainmileage.trainstation.TrainStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,7 +89,7 @@ public class TrainJourneyServiceImpl implements TrainJourneyService {
                 //get the current pair of locations
                 String firstViaStation = trainJourneyRequest.getViaStations().get(i - 1);
                 String nextViaStation = trainJourneyRequest.getViaStations().get(i);
-                System.out.println("STATIONS " + firstViaStation + " " + nextViaStation);
+               // System.out.println("STATIONS " + firstViaStation + " " + nextViaStation);
 
                 for (Location location : locationList){
                     if (location.getCrs().equals(firstViaStation)){

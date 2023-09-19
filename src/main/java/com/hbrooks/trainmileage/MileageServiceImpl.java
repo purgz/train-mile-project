@@ -3,8 +3,8 @@ package com.hbrooks.trainmileage;
 import com.hbrooks.searchtrainapi.ServiceNotFoundException;
 import com.hbrooks.trainmileage.mileagedatamodel.MileageRow;
 import com.hbrooks.trainmileage.mileagedatamodel.MileageTable;
-import com.hbrooks.trainstation.TrainStation;
-import com.hbrooks.trainstation.TrainStationService;
+import com.hbrooks.trainmileage.trainstation.TrainStation;
+import com.hbrooks.trainmileage.trainstation.TrainStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

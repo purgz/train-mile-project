@@ -4,6 +4,8 @@ import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -24,6 +26,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /*
     @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -32,12 +35,23 @@ public class SecurityConfig {
         return auth;
     }
 
+     */
+
+    @Bean
+    public AuthenticationManager authenticationManager(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userService);
+        return new ProviderManager(daoAuthenticationProvider);
+    }
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
 
         http.authorizeHttpRequests( configurer ->
                 configurer
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/journey/journeys/{id}").hasAnyRole("USER","ADMIN")
                         .requestMatchers(HttpMethod.GET, "/journey/journeys/stations/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/journey/journeys/**").hasAnyRole("ADMIN")

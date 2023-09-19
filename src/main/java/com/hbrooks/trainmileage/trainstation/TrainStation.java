@@ -1,4 +1,4 @@
-package com.hbrooks.trainstation;
+package com.hbrooks.trainmileage.trainstation;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
