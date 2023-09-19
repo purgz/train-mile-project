@@ -4,6 +4,7 @@ import com.hbrooks.searchtrainapi.ServiceDetailsErrorResponse;
 import com.hbrooks.searchtrainapi.ServiceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -20,6 +21,13 @@ public class TrainRestExceptionHandler {
         error.setTimeStamp(System.currentTimeMillis());
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    //handler to return 401 if user uses the react login
+    @ExceptionHandler
+    public ResponseEntity<BadCredentialsException> handleException(BadCredentialsException exception){
+
+        return new ResponseEntity<>(exception, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler
