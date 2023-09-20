@@ -71,6 +71,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests( configurer ->
                 configurer
+                        .requestMatchers(HttpMethod.GET, "/hello").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/journey/journeys/{id}").hasAnyRole("USER","ADMIN")
                         .requestMatchers(HttpMethod.GET, "/journey/journeys/stations/**").hasAnyRole("USER", "ADMIN")

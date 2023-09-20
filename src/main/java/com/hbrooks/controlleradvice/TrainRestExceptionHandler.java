@@ -30,6 +30,10 @@ public class TrainRestExceptionHandler {
         return new ResponseEntity<>(exception, HttpStatus.UNAUTHORIZED);
     }
 
+
+    //need to add more for access denied
+
+
     @ExceptionHandler
     public ResponseEntity<ServiceDetailsErrorResponse> handleException(Exception exc){
 

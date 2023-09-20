@@ -47,7 +47,6 @@ public class TrainJourneyController {
     @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
     public List<TrainJourney> getJourneysByUserId(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-       // System.out.println(userDetails.getId());
 
         return trainJourneyService.findJourneysByUserId(id);
     }
@@ -70,7 +69,6 @@ public class TrainJourneyController {
     @GetMapping("/journeys/stations/{id}/{journeyId}")
     @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
     public List<TrainStation> getStationsForJourneyById(@PathVariable("journeyId") Integer journeyId, @PathVariable("id") Integer id){
-
 
         return trainJourneyService.findStationsForJourneyById(journeyId);
     }

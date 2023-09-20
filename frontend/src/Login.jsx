@@ -1,12 +1,16 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "./context/AuthProvider";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "./hooks/useAuth";
 import axios from "./api/axios";
 const LOGIN_URL = "/login";
 
+import {Link, useNavigate} from "react-router-dom";
+
 const Login = () =>{
 
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useAuth();
 
+    const navigate = useNavigate();
+    
     const userRef = useRef();
     const errRef = useRef();
 
@@ -33,21 +37,22 @@ const Login = () =>{
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
                 }
-                );
+            );
 
-                //console.log(JSON.stringify(response));
+            //console.log(JSON.stringify(response));
 
-                const username = response?.data?.username;
-                const password = response?.data?.password;
-                const authorities = response?.data?.authorities;
+            const username = response?.data?.username;
+            const password = response?.data?.password;
+            const authorities = response?.data?.authorities;
 
-                setAuth({username,password,authorities})
+            setAuth({username,password,authorities})
 
-                console.log(username, password, authorities)
-
+            console.log(username, password, authorities)
+               
             setUser('');
             setPwd('');
-
+            navigate("/home");
+            
         } catch (error) {
             if (!error?.response){
                 setErrMsg("No server response");
@@ -93,6 +98,8 @@ const Login = () =>{
            
                 <button>Sign in</button>
             </form>
+
+           
         </section>
     )
 }
