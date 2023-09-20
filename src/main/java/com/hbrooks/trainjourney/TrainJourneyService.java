@@ -1,7 +1,7 @@
 package com.hbrooks.trainjourney;
 
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
-import com.hbrooks.trainstation.TrainStation;
+import com.hbrooks.trainmileage.trainstation.TrainStation;
 
 import java.util.List;
 

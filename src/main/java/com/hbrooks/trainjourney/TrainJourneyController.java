@@ -2,16 +2,13 @@ package com.hbrooks.trainjourney;
 
 
 import com.hbrooks.searchtrainapi.servicedetailsresponsemodel.ServiceDetails;
-import com.hbrooks.trainstation.TrainStation;
-import com.hbrooks.trainstation.TrainStationService;
+import com.hbrooks.trainmileage.trainstation.TrainStation;
 import com.hbrooks.user.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -50,7 +47,6 @@ public class TrainJourneyController {
     @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
     public List<TrainJourney> getJourneysByUserId(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails){
 
-       // System.out.println(userDetails.getId());
 
         return trainJourneyService.findJourneysByUserId(id);
     }
@@ -73,7 +69,6 @@ public class TrainJourneyController {
     @GetMapping("/journeys/stations/{id}/{journeyId}")
     @PreAuthorize(value = "authentication.principal.id == #id" + " or hasRole('ROLE_ADMIN')")
     public List<TrainStation> getStationsForJourneyById(@PathVariable("journeyId") Integer journeyId, @PathVariable("id") Integer id){
-
 
         return trainJourneyService.findStationsForJourneyById(journeyId);
     }

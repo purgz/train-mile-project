@@ -1,8 +1,6 @@
-package com.hbrooks.trainstation;
+package com.hbrooks.trainmileage.trainstation;
 
-import com.hbrooks.searchtrainapi.SearchTrainService;
 import com.hbrooks.trainjourney.TrainJourney;
-import com.hbrooks.trainjourney.TrainJourneyService;
 import com.hbrooks.trainjourney.TrainJourneyStop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
