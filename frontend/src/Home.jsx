@@ -1,6 +1,6 @@
 import AuthContext from "./context/AuthProvider"
 import { useNavigate, Link } from "react-router-dom"
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import useAuth from "./hooks/useAuth";
 import axios from "./api/axios";
 
@@ -10,7 +10,7 @@ function Home() {
   const {setAuth} = useContext(AuthContext);
   const navigate = useNavigate();
 
-  console.log(auth.username, auth.password);
+  //console.log(auth.username, auth.password);
 
   const getJourneys = async () =>{
     try {
@@ -27,11 +27,14 @@ function Home() {
       console.log(res.data);
   
     } catch (error) {
-      console.log(error);
+
+      navigate("/unauthorized");
     }
   }
 
-  getJourneys();
+  useEffect(() =>{
+    getJourneys();
+  })
 
   return (
     <main>

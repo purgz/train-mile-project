@@ -3,6 +3,7 @@ import Login from './Login'
 import {Outlet, Routes, Route} from "react-router-dom";
 import Home from './Home';
 import RequireAuth from './RequireAuth';
+import UnauthorizedPage from './UnauthorizedPage';
 
 function App() {
   
@@ -13,11 +14,13 @@ function App() {
       
         <Route path = "/" element = {<Outlet/>}>
 
-            <Route path="login" element = {<Login/>}></Route>
+            <Route path="/" element = {<Login/>}></Route>
 
             <Route element={<RequireAuth/>}>
               <Route path = "/home" element = {<Home/>}></Route>
             </Route>
+
+            <Route path = "/unauthorized" element = {<UnauthorizedPage/>}></Route>
         </Route>
 
     </Routes>

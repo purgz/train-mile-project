@@ -47,7 +47,7 @@ const Login = () =>{
 
             setAuth({username,password,authorities})
 
-            console.log(username, password, authorities)
+           // console.log(username, password, authorities)
                
             setUser('');
             setPwd('');

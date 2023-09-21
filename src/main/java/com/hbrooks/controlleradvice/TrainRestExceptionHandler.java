@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
 public class TrainRestExceptionHandler {
@@ -30,12 +33,15 @@ public class TrainRestExceptionHandler {
         return new ResponseEntity<>(exception, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<AccessDeniedException> handleException(AccessDeniedException exc){
 
-    //need to add more for access denied
-
+        return new ResponseEntity<>(exc, HttpStatus.FORBIDDEN);
+    }
 
     @ExceptionHandler
     public ResponseEntity<ServiceDetailsErrorResponse> handleException(Exception exc){
+        
 
         ServiceDetailsErrorResponse error = new ServiceDetailsErrorResponse();
 
