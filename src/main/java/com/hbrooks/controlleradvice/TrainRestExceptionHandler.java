@@ -41,7 +41,7 @@ public class TrainRestExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ServiceDetailsErrorResponse> handleException(Exception exc){
-        
+
 
         ServiceDetailsErrorResponse error = new ServiceDetailsErrorResponse();
 
