@@ -1,8 +1,10 @@
 # train-mile-project
 Spring boot train mileage project. 
 
-Aim: create a rest api which will allow users to input a train journey and recieve the mileage and other details about the journey.
+Now implemented spring security with custom user details and hibernate.
 
-Practicing spring boot and using external apis - may add a frontend eventually.
+Rest api to create a train journey based on the crs codes of the stations visited. Then calculates the mileage of the journey and stores in database.
 
-May also add spring security at a later date.
+A user can login with spring security http basic authentication and then only retrieve their own journey data unless the user is an admin.
+
+Now working on building a simple frontend using react.js
