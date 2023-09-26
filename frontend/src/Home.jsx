@@ -1,6 +1,6 @@
 import AuthContext from "./context/AuthProvider"
 import { useNavigate, Link } from "react-router-dom"
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
 import axios from "./api/axios";
 
@@ -10,8 +10,13 @@ function Home() {
   const {setAuth} = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [apiPath, setApiPath] = useState('');
+
   //console.log(auth.username, auth.password);
 
+  //want the home page to display all journeys with option to go to each journey in its own induvidual page
+
+  // mock function until proper crud implementation with frontend - just to test the api call
   const getJourneys = async () =>{
     try {
 
@@ -32,6 +37,11 @@ function Home() {
     }
   }
 
+  
+  useEffect(() =>{
+    setApiPath("/journey/journeys/");
+  },[])
+  
   useEffect(() =>{
     getJourneys();
   })
@@ -39,6 +49,9 @@ function Home() {
   return (
     <main>
       HOME PAGE
+      <hr />
+      api route: 
+      {apiPath}
     </main>
   )
 }
