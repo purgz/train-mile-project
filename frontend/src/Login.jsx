@@ -44,7 +44,7 @@ const Login = () =>{
             const username = response?.data?.username;
             const password = response?.data?.password;
             const authorities = response?.data?.authorities;
-
+            
             setAuth({username,password,authorities})
 
            // console.log(username, password, authorities)

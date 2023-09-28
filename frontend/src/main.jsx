@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <Routes>
         
-          <Route path = "/" element = {<App></App>}></Route>
+          <Route path = "*" element = {<App></App>}></Route>
 
         </Routes>
       </AuthProvider>
